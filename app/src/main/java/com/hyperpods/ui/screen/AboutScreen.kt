@@ -44,6 +44,15 @@ import top.yukonga.miuix.kmp.utils.overScrollVertical
 import top.yukonga.miuix.kmp.utils.scrollEndHaptic
 
 /**
+ * Both rows of the developer card render their icon in a fixed 24dp box so that their text
+ * columns start at the same x. [CaptionIndent] is the resulting inset of that text column:
+ * the icon slot plus the 8dp gap BasicComponent inserts between the icon and the text.
+ */
+private val IconSlotWidth = 24.dp
+private val IconSlotGap = 6.dp
+private val CaptionIndent = IconSlotWidth + IconSlotGap + 8.dp
+
+/**
  * The about tab: identity, appearance and credits.
  *
  * The version lives here and only here, so there is exactly one place to look it up.
@@ -116,14 +125,15 @@ fun AboutScreen(
                                 painter = painterResource(id = R.drawable.ic_deepseek),
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .padding(end = 10.dp)
-                                    .size(width = 27.dp, height = 20.dp),
+                                    .padding(end = IconSlotGap)
+                                    .size(IconSlotWidth),
                                 tint = MiuixTheme.colorScheme.onBackground,
                             )
                         },
                         bottomAction = {
                             Text(
                                 text = "模块设计与实现",
+                                modifier = Modifier.padding(start = CaptionIndent),
                                 fontSize = 12.sp,
                                 color = MiuixTheme.colorScheme.onSurfaceVariantSummary,
                             )
@@ -136,7 +146,9 @@ fun AboutScreen(
                             Icon(
                                 imageVector = MiuixIcons.Link,
                                 contentDescription = null,
-                                modifier = Modifier.padding(end = 6.dp),
+                                modifier = Modifier
+                                    .padding(end = IconSlotGap)
+                                    .size(IconSlotWidth),
                             )
                         },
                         onClick = onOpenCredits,
