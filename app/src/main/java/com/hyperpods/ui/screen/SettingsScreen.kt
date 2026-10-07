@@ -22,6 +22,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.hyperpods.core.AnnouncementMode
+import com.hyperpods.core.BluetoothMonitor
+import com.hyperpods.core.ConnectionState
 import com.hyperpods.core.SettingsStore
 import com.hyperpods.readout.TtsEngines
 import com.hyperpods.readout.TtsSelfCheck
@@ -74,6 +76,10 @@ fun SettingsScreen(
 ) {
     val context = LocalContext.current
     val settings by SettingsStore.state.collectAsStateWithLifecycle()
+    val connection by ConnectionState.state.collectAsStateWithLifecycle()
+    // Speaking while nothing is routed to the AirPods would play through the phone speaker, so the
+    // preview entry is disabled until the same gate the announcements use says it is safe.
+    val canPreview = remember(connection) { BluetoothMonitor.isRoutedToAirPods(context) }
     val scrollBehavior = MiuixScrollBehavior()
     val engines = remember { TtsEngines.installed(context) }
 
@@ -233,7 +239,12 @@ fun SettingsScreen(
                     )
                     ArrowPreference(
                         title = "试听当前语音",
-                        summary = "会通过当前连接的耳机播放",
+                        summary = if (canPreview) {
+                            "会通过当前连接的耳机播放"
+                        } else {
+                            "未连接 AirPods，暂时不能试听"
+                        },
+                        enabled = canPreview,
                         startAction = {
                             Icon(
                                 imageVector = MiuixIcons.Play,
@@ -245,7 +256,7 @@ fun SettingsScreen(
                     )
                     ArrowPreference(
                         title = "语音引擎自检",
-                        summary = "实测当前引擎是否支持语速调节，结果写入运行日志",
+                        summary = "实测当前引擎是否支持语速调节，结果写入系统日志",
                         startAction = {
                             Icon(
                                 imageVector = MiuixIcons.Scan,

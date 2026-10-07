@@ -7,7 +7,6 @@ import android.os.Parcelable
 import android.os.PowerManager
 import android.service.notification.StatusBarNotification
 import com.hyperpods.core.BluetoothMonitor
-import com.hyperpods.core.ConnectionState
 import com.hyperpods.core.EventLog
 import com.hyperpods.core.MODULE_PACKAGE
 import com.hyperpods.core.SettingsStore
@@ -51,13 +50,8 @@ object ReadoutRouter {
         if (!settings.enabled) return
 
         // Reading a notification out loud is only correct while the audio actually goes to the
-        // AirPods: if it is routed anywhere else the phone speaker announces instead. So the
-        // permission-free audio-output check is the gate, and only the hook — which sees the real
-        // profile events — is trusted without it.
-        val connection = ConnectionState.state.value
-        val audioRoutedToAirPods = BluetoothMonitor.checkAirPodsAudioOutput(context)
-        val hookSaysConnected = connection.connected && connection.source == "hook"
-        if (!audioRoutedToAirPods && !hookSaysConnected) return
+        // AirPods: if it is routed anywhere else the phone speaker announces instead.
+        if (!BluetoothMonitor.isRoutedToAirPods(context)) return
 
         if (packageName !in settings.enabledPackages) return
         if (settings.announceOnlyWhenLocked && !isLocked(context)) return

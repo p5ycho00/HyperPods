@@ -93,6 +93,18 @@ object BluetoothMonitor {
      */
     fun checkAirPodsAudioOutput(context: Context): Boolean = detectViaAudioOutput(context)
 
+    /**
+     * Whether speech would actually come out of the AirPods right now: either the active audio
+     * output already routes there, or the hook — which sees the real profile events — says the
+     * headset is connected. Announcements and the preview button share this one gate so they can
+     * never disagree about whether it is safe to speak.
+     */
+    fun isRoutedToAirPods(context: Context): Boolean {
+        if (checkAirPodsAudioOutput(context)) return true
+        val connection = ConnectionState.state.value
+        return connection.connected && connection.source == "hook"
+    }
+
     private fun detectViaAudioOutput(context: Context): Boolean {
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as? AudioManager ?: return false
         val outputs = runCatching {

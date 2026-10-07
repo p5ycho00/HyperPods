@@ -10,6 +10,7 @@ import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
 import com.hyperpods.core.EventLog
+import com.hyperpods.core.BluetoothMonitor
 import com.hyperpods.core.SettingsStore
 import java.util.Locale
 import java.util.concurrent.atomic.AtomicInteger
@@ -261,6 +262,12 @@ object TtsSpeaker {
     }
 
     fun test(context: Context) {
+        // A preview that comes out of the phone speaker is worse than no preview at all, so the
+        // same gate the announcements go through applies here.
+        if (!BluetoothMonitor.isRoutedToAirPods(context)) {
+            EventLog.warn("播报", "未连接 AirPods，已跳过试听")
+            return
+        }
         stop()
         val settings = SettingsStore.state.value
         setTuning(settings.speechRate, settings.pitch)
