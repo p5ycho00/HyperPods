@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
@@ -36,6 +37,7 @@ import top.yukonga.miuix.kmp.basic.Scaffold
 import top.yukonga.miuix.kmp.basic.Text
 import top.yukonga.miuix.kmp.basic.TopAppBar
 import top.yukonga.miuix.kmp.icon.MiuixIcons
+import top.yukonga.miuix.kmp.icon.extended.Community
 import top.yukonga.miuix.kmp.icon.extended.Link
 import top.yukonga.miuix.kmp.icon.extended.Theme
 import top.yukonga.miuix.kmp.preference.ArrowPreference
@@ -53,6 +55,11 @@ private val IconSlotGap = 6.dp
 private val CaptionIndent = IconSlotWidth + IconSlotGap + 8.dp
 
 /**
+ * The project repository, opened from the about tab.
+ */
+private const val ProjectUrl = "https://github.com/p5ycho00/HyperPods"
+
+/**
  * The about tab: identity, appearance and credits.
  *
  * The version lives here and only here, so there is exactly one place to look it up.
@@ -64,6 +71,7 @@ fun AboutScreen(
     onOpenCredits: () -> Unit,
 ) {
     val scrollBehavior = MiuixScrollBehavior()
+    val uriHandler = LocalUriHandler.current
 
     Scaffold(
         topBar = {
@@ -138,6 +146,20 @@ fun AboutScreen(
                                 color = MiuixTheme.colorScheme.onSurfaceVariantSummary,
                             )
                         },
+                    )
+                    BasicComponent(
+                        title = "访问该项目",
+                        summary = "打开本模块的 GitHub 仓库，查看更新日志、反馈问题与源码",
+                        startAction = {
+                            Icon(
+                                imageVector = MiuixIcons.Community,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(end = IconSlotGap)
+                                    .size(IconSlotWidth),
+                            )
+                        },
+                        onClick = { uriHandler.openUri(ProjectUrl) },
                     )
                     ArrowPreference(
                         title = "引用与致谢",
