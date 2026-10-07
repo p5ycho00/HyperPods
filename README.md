@@ -3,6 +3,8 @@
 一个 LSPosed 模块：**AirPods 连接期间，把系统通知朗读出来**，并且可以按应用勾选。
 面向 HyperOS 4.0（Android 16）。
 
+> 模块的设计与实现由 **DeepSeek V4 Flash** 完成。
+
 ## 它做什么
 
 HyperOS 自身对 AirPods 的音频兼容已经可用，但通知播报不生效。本模块不依赖小米的耳机白名单，
@@ -218,6 +220,10 @@ libxposed 的现代模块**必须**在 APK 根目录带 `META-INF/xposed/` 文�
 | `io.github.libxposed:api` | 102.0.0 | 模块 API 102 |
 | `top.yukonga.miuix.kmp:miuix-ui / -preference / -nav / -icons / -blur / -shader / -squircle` | 0.9.4 | UI 框架、偏好项、二级页转场、模糊与高光 |
 | AGP / Kotlin / Compose | 9.4.1 / 2.4.20 / 2026.09.00 | 构建链 |
+
+## 作者
+
+模块的设计与实现由 **DeepSeek V4 Flash** 完成。
 
 ## 许可与致谢
 
