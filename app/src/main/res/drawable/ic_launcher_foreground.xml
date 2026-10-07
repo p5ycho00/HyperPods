@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Foreground layer of the adaptive icon: an earbud with sound waves leaving it, which is what the
+  module does — a connected headset that speaks notifications.
+  Drawn inside the 72dp safe zone (18..90) so no launcher mask can clip it.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Earbud body. The whole motif is kept inside a 35x37 box centred at (54,54): launchers crop
+         the outer 18dp and MIUI zooms beyond that, so the artwork needs real breathing room. -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M37.34,50.98 A8.33,8.33 0 1,1 54.00,50.98 A8.33,8.33 0 1,1 37.34,50.98 Z" />
+
+    <!-- Stem -->
+    <path
+        android:fillColor="#FFFFFFFF"
+        android:pathData="M42.10,59.31 A3.57,3.57 0 0,1 45.67,55.74 A3.57,3.57 0 0,1 49.24,59.31 L49.24,68.83 A3.57,3.57 0 0,1 45.67,72.40 A3.57,3.57 0 0,1 42.10,68.83 Z" />
+
+    <!-- Sound waves: stroked arcs with round caps, so each one is an even, soft stroke -->
+    <path
+        android:pathData="M56.59,43.41 A14.28,14.28 0 0,1 56.59,58.55"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.8"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M61.64,40.26 A20.23,20.23 0 0,1 61.64,61.70"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.8"
+        android:strokeLineCap="round" />
+    <path
+        android:pathData="M66.68,37.11 A26.18,26.18 0 0,1 66.68,64.85"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.8"
+        android:strokeLineCap="round" />
+</vector>
