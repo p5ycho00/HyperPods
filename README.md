@@ -95,7 +95,7 @@ pwsh -File .toolchain/build.ps1 :app:assembleDebug
 
 其中「Xiaomi TTS」需要在清单里声明 `<queries>`（Android 11+ 的包可见性），否则查询不到该引擎。
 
-### 连续消息的三种处理方式
+### 连续消息的两种处理方式
 
 上一条还没念完时又来新消息，这是可配置的（设置 → 连续消息如何处理）：
 
