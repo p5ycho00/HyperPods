@@ -1,0 +1,7 @@
+# Keep the repository LF-based regardless of the platform doing the checkout, so a Windows
+# checkout does not rewrite every file.
+* text=auto eol=lf
+*.bat text eol=crlf
+*.jar binary
+*.png binary
+*.webp binary
